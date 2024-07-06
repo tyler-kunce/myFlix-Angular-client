@@ -1,0 +1,19 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Director: {{ data.name }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>Bio: {{ data.bio }}</p>
+        <p>Birth: {{ data.birth }}</p>
+        <p *ngIf="data.death">Death: {{ data.death }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button
+            mat-raised-button
+            color="primary"
+            (click)="closeDialog()"
+        >
+            Close
+        </button>
+    </mat-card-actions>
+</mat-card>

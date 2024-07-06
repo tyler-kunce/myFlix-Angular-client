@@ -46,7 +46,7 @@ export class FetchApiDataService {
   }
 
   // Delete/de-register user
-  deleteUser(userName: any): Observable<any> {
+  deleteUser(): Observable<any> {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = localStorage.getItem('token');
     return this.http
@@ -108,15 +108,9 @@ export class FetchApiDataService {
   }
 
   // Get user information
-  getUser(userName: string): Observable<any> {
-    const token = localStorage.getItem('token');
-    return this.http
-      .get(apiUrl + 'users/' + userName, {
-        headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
-        }),
-      })
-      .pipe(map(this.extractResponseData), catchError(this.handleError));
+  getUser(): Observable<any> {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user;
   }
 
   // Retrieve user's favorite movies
