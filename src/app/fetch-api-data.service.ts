@@ -84,10 +84,10 @@ export class FetchApiDataService {
   }
 
   // Get director information by name
-  getDirector(directorName: string): Observable<any> {
+  getDirector(name: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
-      .get(apiUrl + 'directors/' + directorName, {
+      .get(apiUrl + 'directors/' + name, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
@@ -96,10 +96,10 @@ export class FetchApiDataService {
   }
 
   // Get genre information by name
-  getGenre(genreName: string): Observable<any> {
+  getGenre(name: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
-      .get(apiUrl + 'genre/' + genreName, {
+      .get(apiUrl + 'genre/' + name, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),

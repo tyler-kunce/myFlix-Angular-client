@@ -51,8 +51,8 @@ export class MovieCardComponent {
     }
   }
 
-  openGenreDialog(genreName: string): void {
-    this.fetchApiData.getGenre(genreName).subscribe((result: any) => {
+  openGenreDialog(name: string): void {
+    this.fetchApiData.getGenre(name).subscribe((result: any) => {
       this.genre = result;
       this.dialog.open(GenreInfoComponent, {
         data: {
@@ -64,8 +64,8 @@ export class MovieCardComponent {
     });
   }
 
-  openDirectorDialog(directorName: string): void {
-    this.fetchApiData.getDirector(directorName).subscribe((result: any) => {
+  openDirectorDialog(name: string): void {
+    this.fetchApiData.getDirector(name).subscribe((result: any) => {
       this.director = result;
       this.dialog.open(DirectorInfoComponent, {
         data: {
