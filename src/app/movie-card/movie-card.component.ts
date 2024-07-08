@@ -4,6 +4,9 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GenreInfoComponent } from '../genre-info/genre-info.component';
+import { DirectorInfoComponent } from '../director-info/director-info.component';
+import { MovieInfoComponent } from '../movie-info/movie-info.component';
 
 @Component({
   selector: 'app-movie-card',
@@ -45,6 +48,85 @@ export class MovieCardComponent {
     if (user) {
       let parsedUser = JSON.parse(user);
       this.favoriteMovies = parsedUser.favoriteMovies
+    }
+  }
+
+  openGenreDialog(genreName: string): void {
+    this.fetchApiData.getGenre(genreName).subscribe((result: any) => {
+      this.genre = result;
+      this.dialog.open(GenreInfoComponent, {
+        data: {
+          name: this.genre.name,
+          description: this.genre.description
+        },
+        width: '500px'
+      });
+    });
+  }
+
+  openDirectorDialog(directorName: string): void {
+    this.fetchApiData.getDirector(directorName).subscribe((result: any) => {
+      this.director = result;
+      this.dialog.open(DirectorInfoComponent, {
+        data: {
+          name: this.director.name,
+          bio: this.director.bio,
+          birthDate: this.director.birthDate,
+          deathDate: this.director.deathDate
+        },
+        width: '500px'
+      });
+    });
+  }
+
+  openMovieDialog(title: string, description: string): void {
+    this.dialog.open(MovieInfoComponent, {
+      data: {
+        title: title,
+        description: description
+      },
+      width: '500px'
+    });
+  }
+
+  isFav(movie: any): boolean {
+    return this.favoriteMovies.includes(movie.title);
+  }
+
+  toggleFav(movie: any): void {
+    const isFavorite = this.isFav(movie);
+    isFavorite ? this.deleteFavMovie(movie) : this.addFavMovie(movie);
+  }
+
+  addFavMovie(movie: any): void {
+    let user = localStorage.getItem('user');
+    if (user) {
+      let parsedUser = JSON.parse(user);
+      this.fetchApiData
+        .addFavoriteMovie(movie.title, parsedUser.username)
+        .subscribe((result: any) => {
+          localStorage.setItem('user', JSON.stringify(result));
+          this.favoriteMovies.push(movie.title);
+          this.snackBar.open(`${movie.title} added to your favorites`, 'OK', {
+            duration: 2000,
+          });
+        });
+    }
+  }
+
+  deleteFavMovie(movie: any): void {
+    let user = localStorage.getItem('user');
+    if (user) {
+      let parsedUser = JSON.parse(user);
+      this.fetchApiData
+        .deleteFavoriteMovie(movie.title, parsedUser.username)
+        .subscribe((result: any) => {
+          localStorage.setItem('user', JSON.stringify(result));
+          this.favoriteMovies = this.favoriteMovies.filter((title) => title !== movie.title);
+          this.snackBar.open(`${movie.title} removed from your favorites`, 'OK', {
+            duration: 2000,
+          });
+        });
     }
   }
 }
