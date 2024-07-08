@@ -14,6 +14,7 @@ export class UserProfileComponent implements OnInit {
   user: any = {};
   movies: any[] = [];
   favoriteMovies: any[] = [];
+  _id: any[] = [];
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -23,7 +24,26 @@ export class UserProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getProfile();
+  }
 
+  public getProfile(): void {
+    this.fetchApiData.getUser().subscribe((result) => {
+      this.user = result;
+      this.userData.Username = this.user.userName;
+      this.userData.Email = this.user.email;
+      if (this.user.birthDate) {
+        let Birthday = new Date(this.user.birthDate);
+        if (!isNaN(Birthday.getTime())) {
+          this.userData.Birthdate = Birthday.toISOString().split('T')[0];
+        }
+      }
+      this.fetchApiData.getAllMovies().subscribe((movies: any[]) => {
+        this.favoriteMovies = movies.filter((movie: any) => {
+          this._id.includes(movie._id)
+        })
+      })
+    })
   }
 
   public userProfile(): void {
