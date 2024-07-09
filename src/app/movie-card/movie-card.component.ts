@@ -100,14 +100,18 @@ export class MovieCardComponent {
   }
 
   toggleFav(movie: any): void {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (!user.username) {
+    const user = localStorage.getItem('user');
+    if (!user) {
       console.error('User is not logged in');
+      this.snackBar.open('You need to be logged in to add a favorite movie', 'OK', {
+        duration: 2000
+      });
       return;
     }
 
+    const parsedUser = JSON.parse(user);
     const isFavorite = this.isFav(movie);
-    isFavorite ? this.deleteFavMovie(movie, user._id) : this.addFavMovie(movie, user._id);
+    isFavorite ? this.deleteFavMovie(movie, parsedUser._id) : this.addFavMovie(movie, parsedUser._id);
   }
 
   addFavMovie(movie: any, userId: string): void {

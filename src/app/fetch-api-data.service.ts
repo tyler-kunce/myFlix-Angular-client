@@ -24,11 +24,11 @@ export class FetchApiDataService {
   }
 
   // Login as user
-  public userLogin(userDetails: any): Observable<any> {
-    console.log(userDetails);
+  public userLogin(userData: any): Observable<any> {
+    console.log(userData);
     return this.http
-      .post(apiUrl + 'login', userDetails)
-      .pipe(catchError(this.handleError));
+      .post(apiUrl + 'login', userData)
+      .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
   // Edit user profile
