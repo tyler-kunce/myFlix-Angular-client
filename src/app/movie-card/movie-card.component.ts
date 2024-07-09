@@ -96,43 +96,40 @@ export class MovieCardComponent {
   }
 
   isFav(movie: any): boolean {
-    return this.favoriteMovies && this.favoriteMovies.includes(movie.title);
+    return this.favoriteMovies && this.favoriteMovies.includes(movie._id);
   }
 
   toggleFav(movie: any): void {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (!user.username) {
+      console.error('User is not logged in');
+      return;
+    }
+
     const isFavorite = this.isFav(movie);
-    isFavorite ? this.deleteFavMovie(movie) : this.addFavMovie(movie);
+    isFavorite ? this.deleteFavMovie(movie, user._id) : this.addFavMovie(movie, user._id);
   }
 
-  addFavMovie(movie: any): void {
-    let user = localStorage.getItem('user');
-    if (user) {
-      let parsedUser = JSON.parse(user);
-      this.fetchApiData
-        .addFavoriteMovie(movie.title, parsedUser.username)
-        .subscribe((result: any) => {
-          localStorage.setItem('user', JSON.stringify(result));
-          this.favoriteMovies.push(movie.title);
-          this.snackBar.open(`${movie.title} added to your favorites`, 'OK', {
-            duration: 2000,
-          });
+  addFavMovie(movie: any, userId: string): void {
+    this.fetchApiData.addFavoriteMovie(userId, movie._id)
+      .subscribe((result: any) => {
+        localStorage.setItem('user', JSON.stringify(result));
+        this.favoriteMovies.push(movie._id);
+        this.snackBar.open(`${movie.title} added to your favorites`, 'OK', {
+          duration: 2000,
         });
-    }
+      });
   }
 
-  deleteFavMovie(movie: any): void {
-    let user = localStorage.getItem('user');
-    if (user) {
-      let parsedUser = JSON.parse(user);
-      this.fetchApiData
-        .deleteFavoriteMovie(movie.title, parsedUser.username)
-        .subscribe((result: any) => {
-          localStorage.setItem('user', JSON.stringify(result));
-          this.favoriteMovies = this.favoriteMovies.filter((title) => title !== movie.title);
-          this.snackBar.open(`${movie.title} removed from your favorites`, 'OK', {
-            duration: 2000,
-          });
+
+  deleteFavMovie(movie: any, userId: string): void {
+    this.fetchApiData.deleteFavoriteMovie(userId, movie._id)
+      .subscribe((result: any) => {
+        localStorage.setItem('user', JSON.stringify(result));
+        this.favoriteMovies = this.favoriteMovies.filter((id) => id !== movie._id);
+        this.snackBar.open(`${movie.title} removed from your favorites`, 'OK', {
+          duration: 2000
         });
-    }
+      });
   }
 }
