@@ -57,11 +57,11 @@ export class MovieCardComponent {
     console.log('Fetching genre:', name)
     this.fetchApiData.getGenre(name).subscribe((result: any) => {
       console.log('Genre fetched:', result);
-      this.genre = result;
+      this.genre = result.Genre;
       this.dialog.open(GenreInfoComponent, {
         data: {
-          name: this.genre.name,
-          description: this.genre.description
+          name: this.genre.Name,
+          description: this.genre.Description
         },
         width: '500px'
       });
