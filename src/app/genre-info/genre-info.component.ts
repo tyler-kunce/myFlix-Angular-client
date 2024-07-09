@@ -15,7 +15,9 @@ export class GenreInfoComponent {
       name: string;
       description: string;
     }
-  ) { }
+  ) {
+    console.log('Genre data received:', data);
+  }
 
   closeDialog(): void {
     this.dialogRef.close();
