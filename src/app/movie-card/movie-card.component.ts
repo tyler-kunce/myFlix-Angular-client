@@ -46,8 +46,10 @@ export class MovieCardComponent {
   getFavorites(): void {
     let user = localStorage.getItem('user');
     if (user) {
-      let parsedUser = JSON.parse(user);
-      this.favoriteMovies = parsedUser.favoriteMovies
+      const parsedUser = JSON.parse(user);
+      this.favoriteMovies = parsedUser.favoriteMovies || [];
+    } else {
+      this.favoriteMovies = [];
     }
   }
 
@@ -63,7 +65,7 @@ export class MovieCardComponent {
         },
         width: '500px'
       });
-    }, error => {
+    }, (error) => {
       console.error('Error fetching genre:', error);
     });
   }
@@ -94,7 +96,7 @@ export class MovieCardComponent {
   }
 
   isFav(movie: any): boolean {
-    return this.favoriteMovies.includes(movie.title);
+    return this.favoriteMovies && this.favoriteMovies.includes(movie.title);
   }
 
   toggleFav(movie: any): void {
