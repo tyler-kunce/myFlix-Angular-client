@@ -1,0 +1,31 @@
+<div>
+    <mat-toolbar>
+        <button
+            mat-button
+            (click)="openMovies()"
+        >
+            <img 
+                src="./assets/logo.jpg"
+                alt="myFlix Logo"
+                height="40"
+                (click)="openMovies()"
+            >
+        </button>
+        <div>
+            <a
+                mat-button
+                (click)="openProfile()"
+            >
+                {{this.username}}
+                <mat-icon>account_circle</mat-icon>
+            </a>
+            <a
+                mat-button
+                (click)="logoutUser()"
+            >
+                Logout
+                <mat-icon>logout</mat-icon>
+            </a>
+        </div>
+    </mat-toolbar>
+</div>

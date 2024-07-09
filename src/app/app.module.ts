@@ -14,6 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -25,6 +26,7 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { GenreInfoComponent } from './genre-info/genre-info.component';
 import { DirectorInfoComponent } from './director-info/director-info.component';
 import { MovieInfoComponent } from './movie-info/movie-info.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
@@ -42,7 +44,8 @@ const appRoutes: Routes = [
     UserProfileComponent,
     GenreInfoComponent,
     DirectorInfoComponent,
-    MovieInfoComponent
+    MovieInfoComponent,
+    NavbarComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -57,7 +60,8 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatToolbarModule
   ],
   providers: [
     provideAnimationsAsync()

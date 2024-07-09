@@ -119,19 +119,18 @@ export class MovieCardComponent {
       .subscribe((result: any) => {
         localStorage.setItem('user', JSON.stringify(result));
         this.favoriteMovies.push(movie._id);
-        this.snackBar.open(`${movie.title} added to your favorites`, 'OK', {
+        this.snackBar.open(`${movie.Title} added to your favorites`, 'OK', {
           duration: 2000,
         });
       });
   }
-
 
   deleteFavMovie(movie: any, userId: string): void {
     this.fetchApiData.deleteFavoriteMovie(userId, movie._id)
       .subscribe((result: any) => {
         localStorage.setItem('user', JSON.stringify(result));
         this.favoriteMovies = this.favoriteMovies.filter((id) => id !== movie._id);
-        this.snackBar.open(`${movie.title} removed from your favorites`, 'OK', {
+        this.snackBar.open(`${movie.Title} removed from your favorites`, 'OK', {
           duration: 2000
         });
       });
