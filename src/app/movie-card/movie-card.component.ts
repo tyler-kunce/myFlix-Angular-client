@@ -72,13 +72,13 @@ export class MovieCardComponent {
 
   openDirectorDialog(name: string): void {
     this.fetchApiData.getDirector(name).subscribe((result: any) => {
-      this.director = result;
+      this.director = result.Director;
       this.dialog.open(DirectorInfoComponent, {
         data: {
-          name: this.director.name,
-          bio: this.director.bio,
-          birthDate: this.director.birthDate,
-          deathDate: this.director.deathDate
+          name: this.director.Name,
+          bio: this.director.Bio,
+          birthDate: this.director.BirthDate,
+          deathDate: this.director.DeathDate
         },
         width: '500px'
       });
