@@ -1,31 +1,26 @@
-<div>
-    <mat-toolbar>
-        <button
-            mat-button
-            (click)="openMovies()"
-        >
-            <img 
-                src="./assets/logo.jpg"
-                alt="myFlix Logo"
-                height="40"
-                (click)="openMovies()"
-            >
-        </button>
-        <div>
-            <a
-                mat-button
-                (click)="openProfile()"
-            >
-                {{this.username}}
-                <mat-icon>account_circle</mat-icon>
-            </a>
-            <a
-                mat-button
-                (click)="logoutUser()"
-            >
-                Logout
-                <mat-icon>logout</mat-icon>
-            </a>
-        </div>
-    </mat-toolbar>
-</div>
+<mat-toolbar class="navbar">
+    <button
+        mat-button
+        (click)="openMovies()"
+    >
+        <span>Great Sports Movies DB</span>
+    </button>
+    <button
+        mat-icon-button
+        (click)="openMovies()"
+    >
+        <mat-icon>local_movies</mat-icon>
+    </button>
+    <button
+        mat-icon-button
+        (click)="openProfile()"
+    >
+        <mat-icon>person_outline</mat-icon>
+    </button>
+    <button
+        mat-icon-button
+        (click)="logoutUser()"
+    >
+        <mat-icon>logout</mat-icon>
+    </button>
+</mat-toolbar>
