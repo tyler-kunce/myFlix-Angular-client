@@ -13,9 +13,12 @@ export class NavbarComponent {
   constructor(
     public snackBar: MatSnackBar,
     public router: Router
-  ) { }
+  ) {
+    console.log('NavbarComponent constructor called');
+  }
 
   ngOnInit(): void {
+    console.log('NavbarComponent initialized')
     this.username = JSON.parse(localStorage.getItem('user')!).username;
   }
 

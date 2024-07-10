@@ -22,9 +22,12 @@ export class UserProfileComponent implements OnInit {
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
     private router: Router
-  ) { }
+  ) {
+    console.log('UserProfileComponent constructor called');
+  }
 
   ngOnInit(): void {
+    console.log('UserProfileComponent initialized')
     this.getProfile();
   }
 
