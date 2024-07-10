@@ -1,35 +1,52 @@
+<app-navbar></app-navbar>
 <div>
-    <app-navbar></app-navbar>
-    <div>
-        <h1>Your Profile</h1>
-        <div>
-            <label>Name: </label>
-            <span>{{ userData.username }}</span>
-        </div>
-        <div>
-            <label>Birthday: </label>
-            <span>{{ userData.birthDate }}</span>
-        </div>
-        <div>
-            <label>Email: </label>
-            <span>{{ userData.email }}</span>
-        </div>
-        <div>
-            <h2>Update Your Profile</h2>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>{{userData.Username}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Email: {{userData.Email}}</p>
+            <p>Birthdate: {{userData.Birthdate}}</p>
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Update Your Profile</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
             <form>
+                <mat-label>Username</mat-label>
                 <mat-form-field>
-                    <mat-label>Name</mat-label>
-                    <input name="name" matInput type="text" [(ngModel)]="formUserData.username" placeholder="Name" />
+                    <input 
+                        name="Username"
+                        matInput
+                        type="text"
+                        [(ngModel)]="userData.Username"
+                        placeholder="Username"
+                    />
                 </mat-form-field>
+                <mat-label>Birthdate</mat-label>
                 <mat-form-field>
-                    <mat-label>Birthdate</mat-label>
-                    <input name="birthdate" matInput type="date" [(ngModel)]="formUserData.birthDate" placeholder="Birthdate" />
+                    <input 
+                        name="birthdate"
+                        matInput
+                        type="date"
+                        [(ngModel)]="userData.BirthDate"
+                        placeholder="Birthdate"
+                    />
                 </mat-form-field>
+                <mat-label>Email</mat-label>
                 <mat-form-field>
-                    <mat-label>Email</mat-label>
-                    <input name="email" matInput type="email" [(ngModel)]="formUserData.email" placeholder="Email" />
+                    <input
+                        name="email"
+                        matInput
+                        type="email"
+                        [(ngModel)]="userData.Email"
+                        placeholder="Email"
+                    />
                 </mat-form-field>
-                <div>
+            </form>
+                <mat-card-actions>
                     <button
                         mat-raised-button
                         type="submit"
@@ -45,14 +62,13 @@
                     >
                         Delete User
                     </button>
-                </div>
-            </form>
-        </div>
-        <div *ngIf="user.favoriteMovies.length > 0">
-            <h2>Your Favorite Movies</h2>
-            <div>
-                <app-movie-card [isFromFav]="true"></app-movie-card>
-            </div>
+                </mat-card-actions>
+        </mat-card-content>
+    </mat-card>
+    <div *ngIf="user.favoriteMovies.length > 0">
+        <h2>Your Favorite Movies</h2>
+        <div>
+            <app-movie-card [isFromFav]="true"></app-movie-card>
         </div>
     </div>
 </div>
