@@ -64,14 +64,10 @@
                 </mat-card-actions>
         </mat-card-content>
     </mat-card>
-    <div>
+    <div *ngIf="user.favoriteMovies.length > 0">
         <h2>Your Favorite Movies</h2>
-        <div *ngIf="favoriteMovies.length === 0">
-            <p>You haven't added movies to your favorites</p>
-        </div>
         <div>
-            <mat-card *ngFor="let movie of favoriteMovies;">
-            </mat-card>
+            <app-movie-card [isFromFav]="true"></app-movie-card>
         </div>
     </div>
 </div>
