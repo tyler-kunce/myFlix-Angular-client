@@ -14,9 +14,8 @@ import { MovieInfoComponent } from '../movie-info/movie-info.component';
   styleUrl: './movie-card.component.scss'
 })
 export class MovieCardComponent {
-  @Input()
-  isFromFav: boolean = false;
-  movies: any[] = [];
+  @Input() isFromFav: boolean = false;
+  @Input() movies: any[] = [];
   genre: any = '';
   director: any = '';
   user: any = {};
