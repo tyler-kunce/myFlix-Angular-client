@@ -17,11 +17,12 @@ export class FetchApiDataService {
 
   private getUsername(): string {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user.userName;
+    return user.userName || '';
   }
 
   private getToken(): { headers: HttpHeaders } {
     const token = localStorage.getItem('token');
+    console.log('Token:', token);
     return {
       headers: new HttpHeaders({
         Authorization: 'Bearer' + token
