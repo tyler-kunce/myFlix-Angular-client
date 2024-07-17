@@ -25,7 +25,7 @@ export class FetchApiDataService {
     console.log('Token:', token);
     return {
       headers: new HttpHeaders({
-        Authorization: 'Bearer' + token
+        Authorization: 'Bearer ' + token
       })
     };
   }
