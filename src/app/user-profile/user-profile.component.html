@@ -68,7 +68,7 @@
         <h2>Your Favorite Movies</h2>
         <div>
             <app-movie-card
-                *ngFor="is movie of favoriteMovies"
+                *ngFor="let movie of favoriteMovies"
                 [movies]="movies"
                 [isFromFav]="true">
             </app-movie-card>
