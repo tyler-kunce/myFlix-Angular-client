@@ -64,7 +64,7 @@
                 </mat-card-actions>
         </mat-card-content>
     </mat-card>
-    <div *ngIf="userData.favoriteMovies.length > 0">
+    <div *ngIf="this.favoriteMovies.length > 0">
         <div>
             <app-movie-card
                 *ngFor="let movie of favoriteMovies"
