@@ -118,6 +118,7 @@ export class MovieCardComponent {
       .subscribe((result: any) => {
         localStorage.setItem('user', JSON.stringify(result));
         this.favoriteMovies.push(movie._id);
+        console.log(this.favoriteMovies);
         this.snackBar.open(`${movie.Title} added to your favorites`, 'OK', {
           duration: 2000,
         });
