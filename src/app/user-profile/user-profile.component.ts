@@ -33,6 +33,8 @@ export class UserProfileComponent implements OnInit {
 
   public getProfile(): void {
     this.fetchApiData.getUser().subscribe((result) => {
+      console.log('Testing, testing')
+      console.log(result)
       this.user = result;
       this.userData.Username = this.user.userName;
       this.userData.Email = this.user.email;
