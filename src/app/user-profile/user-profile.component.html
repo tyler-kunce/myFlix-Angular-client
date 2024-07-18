@@ -67,7 +67,7 @@
     <div *ngIf="user.favoriteMovies.length > 0">
         <div>
             <app-movie-card
-                *ngFor="let movie of favoriteMovies"
+                *ngFor="let movies of favoriteMovies"
                 [movies]="movies"
                 [isFromFav]="true">
             </app-movie-card>
