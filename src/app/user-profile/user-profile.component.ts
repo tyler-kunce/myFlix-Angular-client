@@ -92,10 +92,20 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  /*   getFavoriteMovies(): void {
-      this.user = this.fetchApiData.getUser();
-      this.userData.favoriteMovies = this.user.favoriteMovies;
-      this.favoriteMovies = this.user.favoriteMovies;
+  isFavorite(movie: any): boolean | string {
+    const favorite = this.favoriteMovies.filter((title) => title === movie.Title);
+    if (favorite.length) {
+      console.log(favorite)
+      return true;
+    } else {
+      return 'Nothing to display here.'
     }
-   */
+  }
+
+  getFavoriteMovies(): void {
+    this.user = this.fetchApiData.getUser();
+    this.userData.favoriteMovies = this.user.favoriteMovies;
+    this.favoriteMovies = this.user.favoriteMovies;
+  }
+
 }
