@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -6,17 +6,21 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   templateUrl: './genre-info.component.html',
   styleUrl: './genre-info.component.scss'
 })
-export class GenreInfoComponent {
+export class GenreInfoComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<GenreInfoComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: {
-      name: string;
-      description: string;
+      Name: string;
+      Description: string;
     }
   ) {
     console.log('Genre data received:', data);
+  }
+
+  ngOnInit(): void {
+
   }
 
   closeDialog(): void {

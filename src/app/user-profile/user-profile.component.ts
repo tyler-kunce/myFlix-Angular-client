@@ -10,12 +10,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './user-profile.component.scss'
 })
 export class UserProfileComponent implements OnInit {
-  @Input() userData: any = { Username: '', Password: '', Email: '', Birthdate: '' };
-  formUserData: any = { username: '', password: '', email: '' };
+  @Input() userData = { Username: '', Password: '', Email: '', Birthdate: '', FavoriteMovies: [] };
   user: any = {};
   movies: any[] = [];
-  favoriteMovies: any[] = [];
-  _id: any[] = [];
+  FavoriteMovies: any[] = [];
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -29,83 +27,44 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     console.log('UserProfileComponent initialized')
     this.getProfile();
+    this.getFavoriteMovies();
   }
 
-  public getProfile(): void {
-    this.fetchApiData.getUser().subscribe((result) => {
-      console.log('Testing, testing')
-      console.log(result)
-      this.user = result;
-      this.userData.Username = this.user.Username;
-      this.userData.Email = this.user.Email;
-      if (this.user.Birthdate) {
-        let Birthday = new Date(this.user.Birthdate);
-        if (!isNaN(Birthday.getTime())) {
-          this.userData.Birthdate = Birthday.toISOString().split('T')[0];
-        }
-      }
-      this.fetchApiData.getAllMovies().subscribe((movies: any[]) => {
-        this.favoriteMovies = movies.filter((movie: any) => {
-          this._id.includes(movie._id)
-        })
-      })
+  getProfile(): void {
+    this.user = this.fetchApiData.getUser();
+    this.userData.Username = this.user.Username;
+    this.userData.Password = this.user.Password;
+    this.userData.Email = this.user.Email;
+    this.userData.Birthdate = this.user.birthDate;
+    this.fetchApiData.getAllMovies().subscribe((result) => {
+      this.FavoriteMovies = result.filter((movie: any) => this.user.FavoriteMovies.includes(movie.Title));
     })
   }
 
-  /*   public userProfile(): void {
-      this.fetchApiData.getUser().subscribe((result: any) => {
-        this.user = result;
-        this.userData.Username = this.user.userName;
-        this.userData.Email = this.user.email;
-        this.userData.Birthdate = this.user.birthDate;
-  
-        this.fetchApiData.getAllMovies().subscribe((result) => {
-          this.favoriteMovies = result.filter((movie: any) => this.user.favoriteMovies.includes(movie._id));
-        });
-      });
-    }
-   */
-  async editUser(): Promise<void> {
-    let formData = this.formUserData;
-    formData.Birthdate = this.user.Birthdate.slice(0, 10)
-    this.fetchApiData.editUser(formData).subscribe((result: any) => {
+  getFavoriteMovies(): void {
+    this.user = this.fetchApiData.getUser();
+    this.userData.FavoriteMovies = this.user.FavoriteMovies;
+    this.FavoriteMovies = this.user.FavoriteMovies;
+    console.log(`User's favorite movies ${this.FavoriteMovies}`);
+  }
+
+  editUser(): void {
+    this.fetchApiData.editUser(this.userData).subscribe((result: any) => {
       localStorage.setItem('user', JSON.stringify(result));
-      this.snackBar.open('User profile updated successfully!', 'OK', {
-        duration: 2000
-      });
-      this.getProfile();
-    }, (error) => {
-      this.snackBar.open('Failed to update user', 'OK', {
+      this.snackBar.open('Profile updated successfully!', 'OK', {
         duration: 2000
       });
     });
   }
 
   deleteUser(): void {
-    this.fetchApiData.deleteUser().subscribe((result: any) => {
-      this.snackBar.open('User successfully deleted', 'OK', {
-        duration: 2000
+    console.log('deleteUser method: ', this.userData.Username);
+    if (confirm('Do you really want to delete this account?')) {
+      this.fetchApiData.deleteUser().subscribe((result: any) => {
+        localStorage.clear();
+        this.router.navigate(['welcome']);
       });
-    });
-    this.router.navigate(['welcome']).then(() => {
-      localStorage.clear();
-    });
-  }
-
-  isFavorite(movie: any): boolean | string {
-    const favorite = this.favoriteMovies.filter((title) => title === movie.Title);
-    if (favorite.length) {
-      console.log(favorite)
-      return true;
-    } else {
-      return 'Nothing to display here.'
     }
-  }
-
-  getFavoriteMovies(): void {
-    this.user = this.fetchApiData.getUser();
-    this.userData.favoriteMovies = this.user.favoriteMovies;
-    this.favoriteMovies = this.user.favoriteMovies;
   }
 
 }

@@ -6,14 +6,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   templateUrl: './movie-info.component.html',
   styleUrl: './movie-info.component.scss'
 })
-export class MovieInfoComponent {
+export class MovieInfoComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<MovieInfoComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: {
-      title: string;
-      description: string;
+      Description: string;
     }
   ) { }
 

@@ -2,7 +2,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenreInfoComponent } from '../genre-info/genre-info.component';
 import { DirectorInfoComponent } from '../director-info/director-info.component';
@@ -13,26 +12,27 @@ import { MovieInfoComponent } from '../movie-info/movie-info.component';
   templateUrl: './movie-card.component.html',
   styleUrl: './movie-card.component.scss'
 })
-export class MovieCardComponent {
-  @Input() isFromFav: boolean = false;
-  @Input() movies: any[] = [];
+export class MovieCardComponent implements OnInit {
+  @Input()
+  isFromFav: boolean = false;
+  movies: any[] = [];
+  FavoriteMovies: any[] = [];
   genre: any = '';
   director: any = '';
   user: any = {};
-  favoriteMovies: any[] = [];
+  userData = { Username: "", FavoriteMovies: [] };
 
 
   constructor(
     public fetchApiData: FetchApiDataService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
-    private router: Router
   ) {
   }
 
   ngOnInit(): void {
+    this.getFavoriteMovies();
     this.getMovies();
-    this.getFavorites();
   }
 
   getMovies(): void {
@@ -42,95 +42,72 @@ export class MovieCardComponent {
     });
   }
 
-  getFavorites(): void {
-    let user = localStorage.getItem('user');
-    if (user) {
-      const parsedUser = JSON.parse(user);
-      this.favoriteMovies = parsedUser.favoriteMovies || [];
-    } else {
-      this.favoriteMovies = [];
-    }
+  openGenreDialog(name: string, description: string): void {
+    console.log('Fetching genre: ', name, description);
+    this.dialog.open(GenreInfoComponent, {
+      data: {
+        Name: name,
+        Description: description
+      },
+      width: '400px'
+    })
   }
 
-  openGenreDialog(name: string): void {
-    console.log('Fetching genre:', name)
-    this.fetchApiData.getGenre(name).subscribe((result: any) => {
-      console.log('Genre fetched:', result);
-      this.genre = result.Genre;
-      this.dialog.open(GenreInfoComponent, {
-        data: {
-          name: this.genre.Name,
-          description: this.genre.Description
-        },
-        width: '500px'
-      });
-    }, (error) => {
-      console.error('Error fetching genre:', error);
+  openDirectorDialog(name: string, bio: string, birthDate: string, deathDate: string): void {
+    console.log('Fetching director: ', name, birthDate, deathDate);
+    this.dialog.open(DirectorInfoComponent, {
+      data: {
+        Name: name,
+        Bio: bio,
+        birthDate: birthDate,
+        deathDate: deathDate
+      },
+      width: '400px'
     });
   }
 
-  openDirectorDialog(name: string): void {
-    this.fetchApiData.getDirector(name).subscribe((result: any) => {
-      this.director = result.Director;
-      this.dialog.open(DirectorInfoComponent, {
-        data: {
-          name: this.director.Name,
-          bio: this.director.Bio,
-          birthDate: this.director.BirthDate,
-          deathDate: this.director.DeathDate
-        },
-        width: '500px'
-      });
-    });
-  }
-
-  openMovieDialog(title: string, description: string): void {
+  openMovieDialog(description: string): void {
+    console.log('Fetching movie: ', description);
     this.dialog.open(MovieInfoComponent, {
       data: {
-        title: title,
-        description: description
+        Description: description
       },
       width: '500px'
     });
   }
 
-  isFav(movie: any): boolean {
-    return this.favoriteMovies && this.favoriteMovies.includes(movie._id);
+  getFavoriteMovies(): void {
+    this.user = this.fetchApiData.getUser();
+    this.userData.FavoriteMovies = this.user.FavoriteMovies;
+    this.FavoriteMovies = this.user.FavoriteMovies;
+    console.log('Favorite movies: ', this.FavoriteMovies);
   }
 
-  toggleFav(movie: any): void {
-    const user = localStorage.getItem('user');
-    if (!user) {
-      console.error('User is not logged in');
-      this.snackBar.open('You need to be logged in to add a favorite movie', 'OK', {
-        duration: 2000
+  isFav(movie: string): boolean {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user.FavoriteMovies.indexOf(movie) >= 0;
+  }
+
+  addFavMovie(movieName: any): void {
+    let user = this.fetchApiData.getUser();
+    this.userData.Username = this.user.Username;
+    this.fetchApiData.addFavoriteMovie(movieName).subscribe((result) => {
+      localStorage.setItem('user', JSON.stringify(result));
+      this.getFavoriteMovies();
+      this.snackBar.open(`${movieName} has been added to your favorites!`, 'OK', {
+        duration: 2000,
       });
-      return;
-    }
-
-    const parsedUser = JSON.parse(user);
-    const isFavorite = this.isFav(movie);
-    isFavorite ? this.deleteFavMovie(movie, parsedUser._id) : this.addFavMovie(movie, parsedUser._id);
+    });
   }
 
-  addFavMovie(movie: any, userId: string): void {
-    this.fetchApiData.addFavoriteMovie(userId, movie._id)
-      .subscribe((result: any) => {
+  deleteFavMovie(movieName: any): void {
+    this.user = this.fetchApiData.getUser();
+    this.userData.Username = this.user.Username;
+    this.fetchApiData.deleteFavoriteMovie(movieName)
+      .subscribe((result) => {
         localStorage.setItem('user', JSON.stringify(result));
-        this.favoriteMovies.push(movie._id);
-        console.log(this.favoriteMovies);
-        this.snackBar.open(`${movie.Title} added to your favorites`, 'OK', {
-          duration: 2000,
-        });
-      });
-  }
-
-  deleteFavMovie(movie: any, userId: string): void {
-    this.fetchApiData.deleteFavoriteMovie(userId, movie._id)
-      .subscribe((result: any) => {
-        localStorage.setItem('user', JSON.stringify(result));
-        this.favoriteMovies = this.favoriteMovies.filter((id) => id !== movie._id);
-        this.snackBar.open(`${movie.Title} removed from your favorites`, 'OK', {
+        this.getFavoriteMovies();
+        this.snackBar.open(`${movieName} removed from your favorites`, 'OK', {
           duration: 2000
         });
       });

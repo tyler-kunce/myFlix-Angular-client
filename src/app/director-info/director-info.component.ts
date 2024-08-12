@@ -12,10 +12,10 @@ export class DirectorInfoComponent implements OnInit {
     public dialogRef: MatDialogRef<DirectorInfoComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: {
-      name: string;
-      bio: string;
-      birth: Date;
-      death: Date;
+      Name: string;
+      Bio: string;
+      birthDate: Date;
+      deathDate: Date;
     }
   ) { }
 
