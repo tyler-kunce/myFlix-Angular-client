@@ -25,9 +25,9 @@
                     Movie Info
                     </button>
                     <button
-                        (click)="isFav(movie.Title)? deleteFavMovie(movie.Title) : addFavMovie(movie.Title)">
+                        (click)="isFav(movie._id)? deleteFavMovie(movie._id) : addFavMovie(movie._id)">
                         <mat-icon>
-                            {{ isFav(movie.Title) ? 'favorite' : 'favorite_border' }}
+                            {{ isFav(movie._id) ? 'favorite' : 'favorite_border' }}
                         </mat-icon>
                     </button>
                 </div>

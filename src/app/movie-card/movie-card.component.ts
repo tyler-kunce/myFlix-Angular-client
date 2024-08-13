@@ -17,8 +17,6 @@ export class MovieCardComponent implements OnInit {
   isFromFav: boolean = false;
   movies: any[] = [];
   FavoriteMovies: any[] = [];
-  genre: any = '';
-  director: any = '';
   user: any = {};
   userData = { Username: "", FavoriteMovies: [] };
 
@@ -83,31 +81,31 @@ export class MovieCardComponent implements OnInit {
     console.log('Favorite movies: ', this.FavoriteMovies);
   }
 
-  isFav(movie: string): boolean {
+  isFav(movieID: string): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user.FavoriteMovies.indexOf(movie) >= 0;
+    return user.FavoriteMovies.indexOf(movieID) >= 0;
   }
 
-  addFavMovie(movieName: any): void {
+  addFavMovie(movie: string): void {
     let user = this.fetchApiData.getUser();
     this.userData.Username = this.user.Username;
-    this.fetchApiData.addFavoriteMovie(movieName).subscribe((result) => {
+    this.fetchApiData.addFavoriteMovie(movie).subscribe((result) => {
       localStorage.setItem('user', JSON.stringify(result));
       this.getFavoriteMovies();
-      this.snackBar.open(`${movieName} has been added to your favorites!`, 'OK', {
+      this.snackBar.open('A movie has been added to your favorites!', 'OK', {
         duration: 2000,
       });
     });
   }
 
-  deleteFavMovie(movieName: any): void {
+  deleteFavMovie(movie: any): void {
     this.user = this.fetchApiData.getUser();
     this.userData.Username = this.user.Username;
-    this.fetchApiData.deleteFavoriteMovie(movieName)
+    this.fetchApiData.deleteFavoriteMovie(movie)
       .subscribe((result) => {
         localStorage.setItem('user', JSON.stringify(result));
         this.getFavoriteMovies();
-        this.snackBar.open(`${movieName} removed from your favorites`, 'OK', {
+        this.snackBar.open('A movie has been removed from your favorites', 'OK', {
           duration: 2000
         });
       });
