@@ -42,7 +42,7 @@
               "src/styles.scss"
             ],
             "scripts": [],
-            "baseHref": "/",
+            "baseHref": "/myFlix-Angular-client",
             "deployUrl": "/"
           },
           "configurations": {
