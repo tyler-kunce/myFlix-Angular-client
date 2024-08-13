@@ -65,15 +65,15 @@
     </mat-card>
     <div>
         <h3>Your Favorite Movies</h3>
-        <div>
+        <div *ngIf="FavoriteMovies && FavoriteMovies.length > 0; else noFavoritesTemplate">
             <mat-card *ngFor="let movie of FavoriteMovies;">
                 <mat-card-content>
                     <img src="{{movie.ImagePath}}" />
                 </mat-card-content>
-                    <div *ngIf="!FavoriteMovies || FavoriteMovies.length === 0">
-                        <p>No favorites here!</p>
-                    </div>
             </mat-card>
         </div>
+        <ng-template #noFavoritesTemplate>
+            <p>No favorites here!</p>
+        </ng-template>
     </div>
 </div>
