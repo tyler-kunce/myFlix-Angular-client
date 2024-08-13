@@ -63,13 +63,17 @@
                 </mat-card-actions>
         </mat-card-content>
     </mat-card>
-    <div *ngFor="let movie of FavoriteMovies;" >
-        <mat-card-subtitle>Favorite Movies</mat-card-subtitle>
-            <mat-card-content>
-                <img src="{{movie.ImagePath}}" />
-            </mat-card-content>
-            <div *ngIf="!FavoriteMovies || FavoriteMovies.length === 0">
-                <p>You have no favorites</p>
-            </div>
+    <div>
+        <h3>Your Favorite Movies</h3>
+        <div>
+            <mat-card *ngFor="let movie of FavoriteMovies;">
+                <mat-card-content>
+                    <img src="{{movie.ImagePath}}" />
+                </mat-card-content>
+                    <div *ngIf="!FavoriteMovies || FavoriteMovies.length === 0">
+                        <p>No favorites here!</p>
+                    </div>
+            </mat-card>
+        </div>
     </div>
 </div>

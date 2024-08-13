@@ -110,7 +110,7 @@ export class FetchApiDataService {
     const user = JSON.parse(localStorage.getItem('user') || '{}')
     const token = localStorage.getItem('token');
     return this.http
-      .get(apiUrl + `users/${user.Username}/movies/`, {
+      .get(apiUrl + 'users/movies/' + movieName, {
         headers: new HttpHeaders({ Authorization: 'Bearer ' + token }),
       })
       .pipe(map(this.extractResponseData), map((data) => data.FavoriteMovies), catchError(this.handleError)
