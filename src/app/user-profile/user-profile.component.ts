@@ -37,7 +37,7 @@ export class UserProfileComponent implements OnInit {
     this.userData.Email = this.user.Email;
     this.userData.Birthdate = this.user.birthDate;
     this.fetchApiData.getAllMovies().subscribe((result) => {
-      this.FavoriteMovies = result.filter((movie: any) => this.user.FavoriteMovies.includes(movie.Title));
+      this.FavoriteMovies = result.filter((movie: any) => this.user.FavoriteMovies.includes(movie._id));
     })
   }
 
