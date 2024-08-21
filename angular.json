@@ -20,7 +20,7 @@
             "outputPath": "dist/my-flix-angular-client",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "baseHref": "/",
+            "baseHref": "/myFlix-Angular-client/",
             "polyfills": [
               "zone.js"
             ],
@@ -33,8 +33,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
-            "deployUrl": "/"
+            "scripts": []
           },
           "configurations": {
             "production": {
