@@ -10,6 +10,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class NavbarComponent {
   public username: string = '';
 
+  // Constructs NavbarComponent instance
+  /**
+   * 
+   * @param snackBar - Angular Material's 'Snack Bar'
+   * @param router - Angular's 'Router'
+   */
   constructor(
     public snackBar: MatSnackBar,
     public router: Router

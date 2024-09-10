@@ -15,6 +15,14 @@ export class UserProfileComponent implements OnInit {
   movies: any[] = [];
   FavoriteMovies: any[] = [];
 
+  // Constructs UserProfileComponent instance
+  /**
+   * 
+   * @param fetchApiData - API service to fetch data
+   * @param dialog - Angular Material's Dialog
+   * @param snackBar - Angular Material's Snack Bar
+   * @param router - Angular's Router
+   */
   constructor(
     public fetchApiData: FetchApiDataService,
     public dialog: MatDialog,

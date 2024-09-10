@@ -11,6 +11,12 @@ import { MovieCardComponent } from '../movie-card/movie-card.component';
   styleUrl: './welcome-page.component.scss'
 })
 export class WelcomePageComponent implements OnInit {
+
+  // Constructs WelcomePageComponent instance
+  /**
+   * 
+   * @param dialog - Angular Material's Dialog
+   */
   constructor(public dialog: MatDialog) { }
   ngOnInit(): void {
 

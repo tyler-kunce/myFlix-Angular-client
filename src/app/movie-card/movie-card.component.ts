@@ -20,7 +20,13 @@ export class MovieCardComponent implements OnInit {
   user: any = {};
   userData = { Username: "", FavoriteMovies: [] };
 
-
+  // Constructs MovieCardComponent instance; initializes FetchApiDataService, MatDialog, and MatSnackBar
+  /**
+   * 
+   * @param fetchApiData - Service that fetches data from movie_api
+   * @param dialog - Material's service for launching dialogs
+   * @param snackBar - Material's service for showing 'snack bar' notifications
+   */
   constructor(
     public fetchApiData: FetchApiDataService,
     public dialog: MatDialog,
@@ -40,6 +46,12 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  // Material Dialog showing genre info
+  /**
+   * 
+   * @param name - Name of genre
+   * @param description - Description of genre
+   */
   openGenreDialog(name: string, description: string): void {
     console.log('Fetching genre: ', name, description);
     this.dialog.open(GenreInfoComponent, {
@@ -51,6 +63,14 @@ export class MovieCardComponent implements OnInit {
     })
   }
 
+  // Material Dialog showing director info
+  /**
+   * 
+   * @param name - Name of director
+   * @param bio - Bio of director
+   * @param birthDate - Director's birth date
+   * @param deathDate - Director's death date (if applicable)
+   */
   openDirectorDialog(name: string, bio: string, birthDate: string, deathDate: string): void {
     console.log('Fetching director: ', name, birthDate, deathDate);
     this.dialog.open(DirectorInfoComponent, {
@@ -64,6 +84,11 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  // Material Dialog showing movie info
+  /**
+   * 
+   * @param description - Movie's description
+   */
   openMovieDialog(description: string): void {
     console.log('Fetching movie: ', description);
     this.dialog.open(MovieInfoComponent, {
@@ -81,11 +106,22 @@ export class MovieCardComponent implements OnInit {
     console.log('Favorite movies: ', this.FavoriteMovies);
   }
 
+  // Check if movie marked as favorite
+  /**
+   * 
+   * @param movieID - _id of movie
+   * @returns True if movie marked as favorite
+   */
   isFav(movieID: string): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     return user.FavoriteMovies.indexOf(movieID) >= 0;
   }
 
+  // Add movie to user's favorites
+  /**
+   * 
+   * @param movie - Movie object to be added
+   */
   addFavMovie(movie: string): void {
     let user = this.fetchApiData.getUser();
     this.userData.Username = this.user.Username;
@@ -98,6 +134,11 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  // Delete movie from user's favorites
+  /**
+   * 
+   * @param movie - Movie object to be removed
+   */
   deleteFavMovie(movie: any): void {
     this.user = this.fetchApiData.getUser();
     this.userData.Username = this.user.Username;

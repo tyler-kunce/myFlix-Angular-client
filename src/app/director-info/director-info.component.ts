@@ -8,6 +8,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class DirectorInfoComponent implements OnInit {
 
+  // Constructs DirectorInfoComponent instance
+  /**
+   * 
+   * @param dialogRef - Angular Material's Dialog Reference
+   * @param data - Data that is injected into dialog; contains director's name, bio, birth & death dates
+   */
   constructor(
     public dialogRef: MatDialogRef<DirectorInfoComponent>,
     @Inject(MAT_DIALOG_DATA)

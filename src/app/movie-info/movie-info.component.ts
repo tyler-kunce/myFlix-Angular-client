@@ -8,6 +8,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class MovieInfoComponent implements OnInit {
 
+  // Constructs MovieInfoComponent instance
+  /**
+   * 
+   * @param dialogRef - Angular Material's Dialog Reference
+   * @param data - API data injected into dialog; contains movie title and description
+   */
   constructor(
     public dialogRef: MatDialogRef<MovieInfoComponent>,
     @Inject(MAT_DIALOG_DATA)

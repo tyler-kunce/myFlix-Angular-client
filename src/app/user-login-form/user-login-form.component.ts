@@ -11,8 +11,21 @@ import { Router } from '@angular/router';
 })
 export class UserLoginFormComponent implements OnInit {
 
+  // Object placeholder with user login data
+  /**
+   * @property {string} username - User's username
+   * @property {string} password - User's password
+   */
   @Input() userData = { Username: '', Password: '' };
 
+  // Constructs UserLoginFormComponent instance
+  /**
+   * 
+   * @param fetchApiData - API service to fetch data
+   * @param dialogRef - Angular Material's Dialog Reference
+   * @param snackBar - Angular Material's Snack Bar
+   * @param router - Angular's Router
+   */
   constructor(
     public fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<UserLoginFormComponent>,

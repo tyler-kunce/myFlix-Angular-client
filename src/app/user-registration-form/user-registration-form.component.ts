@@ -19,6 +19,13 @@ export class UserRegistrationFormComponent implements OnInit {
 
   @Input() userData = { Username: '', Password: '', Email: '', Birthdate: '' };
 
+  // Constructs UserProfileComponent instance
+  /**
+   * 
+   * @param fetchApidata - API service to fetch data
+   * @param dialogRef - Angular Material's Dialog Reference
+   * @param snackBar - Angular Material's Snack Bar
+   */
   constructor(
     public fetchApidata: FetchApiDataService,
     public dialogRef: MatDialogRef<UserRegistrationFormComponent>,
